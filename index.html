@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Axion Labs</title>
+
+<!-- FUTURISTIC + SOLARPUNK FONT -->
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif; /* SOLARPUNK CLEAN */
+  background: #0f0f0f;
+  color: #fff;
+}
+
+.container {
+  max-width: 420px;
+  margin: auto;
+  padding: 16px;
+}
+
+.profile {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.profile img {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  margin-bottom: 10px;
+}
+
+.profile h2 {
+  font-family: 'Orbitron', sans-serif; /* FUTURISTIC */
+  letter-spacing: 1px;
+  text-shadow: 0 0 6px rgba(0,255,153,0.6);
+}
+
+.profile p {
+  font-size: 14px;
+  opacity: 0.8;
+}
+
+.product {
+  background: #1a1a1a;
+  border-radius: 14px;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+.product h3 {
+  margin: 0 0 6px;
+  font-family: 'Orbitron', sans-serif; /* FUTURISTIC */
+  letter-spacing: 0.5px;
+}
+
+.price {
+  color: #00ff99;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.buy-btn {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
+  background: #00ff99;
+  color: #000;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+}
+
+.payment {
+  display: none;
+  margin-top: 12px;
+  background: #111;
+  border-radius: 12px;
+  padding: 14px;
+}
+
+.wallet {
+  background: #1f1f1f;
+  padding: 10px;
+  border-radius: 8px;
+  margin-bottom: 8px;
+  cursor: pointer;
+  text-align: center;
+  font-family: 'Orbitron', sans-serif; /* TECH FEEL */
+  letter-spacing: 0.5px;
+}
+
+.wallet:hover {
+  background: #00ff99;
+  color: #000;
+}
+
+.number-box {
+  display: none;
+  margin-top: 10px;
+  background: #000;
+  padding: 10px;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.copy-btn {
+  margin-top: 8px;
+  background: #444;
+  color: #fff;
+}
+
+.wa-btn {
+  margin-top: 8px;
+  background: #25D366;
+  color: #000;
+}
+
+footer {
+  text-align: center;
+  font-size: 12px;
+  opacity: 0.5;
+  margin-top: 24px;
+  font-family: 'Inter', sans-serif;
+}
+
+.footer{
+  margin-top: 40px;
+  padding: 16px 0;
+  text-align: center;
+  font-size: 12px;
+  color: rgba(180,255,220,0.6);
+  font-family: 'Space Grotesk', sans-serif;
+}
+
+.store-desc {
+  text-align: center;
+  font-size: 14px;
+  opacity: 0.85;
+  line-height: 1.6;
+  margin-bottom: 24px;
+}
+
+/* LOADING SCREEN */
+#loading {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #0f0f0f;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.loader-content {
+  text-align: center;
+}
+
+.loader-content h1 {
+  font-family: 'Orbitron', sans-serif;
+  color: #00ff99;
+  margin-bottom: 20px;
+  text-shadow: 0 0 10px rgba(0,255,153,0.8);
+}
+
+.loader-content p {
+  font-size: 13px;
+  opacity: 0.7;
+  margin-top: 14px;
+}
+
+/* SPINNER */
+.spinner {
+  width: 42px;
+  height: 42px;
+  border: 3px solid rgba(0,255,153,0.2);
+  border-top: 3px solid #00ff99;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: auto;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.product-image {
+  margin: 12px 0;
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: pointer;
+  position: relative;
+}
+
+.product-image img {
+  width: 100%;
+  aspect-ratio: 9 / 16;
+  object-fit: cover;
+  border-radius: 12px;
+  transition: transform 0.3s ease;
+}
+
+.product-image:hover img {
+  transform: scale(1.03);
+}
+
+#preview {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.9);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 99999;
+}
+
+#preview img {
+  max-width: 90%;
+  max-height: 90%;
+  border-radius: 16px;
+  box-shadow:
+    0 0 25px rgba(0,255,153,0.8),
+    0 0 60px rgba(0,255,153,0.5);
+  animation: glowPulse 1.5s infinite alternate;
+}
+
+@keyframes glowPulse {
+  from {
+    box-shadow:
+      0 0 15px rgba(0,255,153,0.5),
+      0 0 40px rgba(0,255,153,0.3);
+  }
+  to {
+    box-shadow:
+      0 0 30px rgba(0,255,153,1),
+      0 0 70px rgba(0,255,153,0.7);
+  }
+}
+
+.carousel {
+  position: relative;
+  overflow: hidden;
+  border-radius: 12px;
+  margin: 12px 0;
+}
+
+.carousel-track {
+  display: flex;
+  transition: transform 0.35s ease;
+}
+
+.carousel-track img {
+  min-width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+/* DOTS */
+.dots {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.3);
+  transition: 0.3s;
+}
+
+.dot.active {
+  background: #00ff99;
+  box-shadow: 0 0 8px rgba(0,255,153,0.9);
+}
+
+.carousel-track img:active {
+  transform: scale(0.96);
+  filter: drop-shadow(0 0 12px rgba(0,255,153,0.8));
+}
+
+/* MICRO INTERACTION BUTTON */
+.buy-btn {
+  position: relative;
+  overflow: hidden;
+  transition: 0.3s ease;
+}
+
+/* HOVER GLOW */
+.buy-btn:hover {
+  box-shadow:
+    0 0 12px rgba(0,255,153,0.8),
+    0 0 30px rgba(0,255,153,0.4);
+  transform: translateY(-1px);
+}
+
+/* RIPPLE EFFECT */
+.buy-btn::after {
+  content: "";
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  background: radial-gradient(circle, rgba(0,255,153,0.5) 0%, transparent 70%);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  opacity: 0;
+  transition: transform 0.6s, opacity 0.6s;
+  pointer-events: none;
+}
+
+.buy-btn:active::after {
+  transform: translate(-50%, -50%) scale(2);
+  opacity: 1;
+}
+
+.btn-loader {
+  display: none;
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(0,0,0,0.2);
+  border-top: 2px solid #000;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin: auto;
+}
+
+.buy-btn.loading .btn-text {
+  display: none;
+}
+
+.buy-btn.loading .btn-loader {
+  display: block;
+}
+
+.wa-btn.disabled {
+  background: #555;
+  color: #aaa;
+  cursor: not-allowed;
+  box-shadow: none;
+  opacity: 0.6;
+}
+</style>
+</head>
+
+<body>
+  <div id="preview" onclick="closePreview()">
+  <img id="preview-img">
+</div>
+  
+  <!-- LOADING SCREEN -->
+<div id="loading">
+  <div class="loader-content">
+    <h1>Please Wait</h1>
+    <div class="spinner"></div>
+    <p>Initializing digital system...</p>
+  </div>
+</div>
+  
+<div class="container">
+
+<div class="profile">
+  <img src="https://raw.githubusercontent.com/AxionLabs-082/my-Labs/main/image/profil.png">
+  <h2 style="color: #00ff99;">Axion Labs</h2>
+  <p>[ Prompt AI | E-book digital ]</p>
+</div>
+
+</div>
+
+<hr><div class="store-desc">
+  Toko digital independen yang menyediakan prompt AI dan e-book digital.
+  Pembayaran dilakukan melalui e-wallet, dan produk dikirim setelah pembayaran dikonfirmasi.
+<hr></div>
+
+<br><br><h3>Product:</h3>
+<div class="product">
+  <h3>Prompt Jailbreak DeepSeek</h3>
+  <div class="carousel">
+  <div class="carousel-track">
+    <img src="https://raw.githubusercontent.com/AxionLabs-082/my-Labs/main/image/gambar1.png" onclick="openPreview(this)">
+    <img src="https://raw.githubusercontent.com/AxionLabs-082/my-Labs/main/image/prompt1.png" onclick="openPreview(this)">
+    <img src="https://raw.githubusercontent.com/AxionLabs-082/my-Labs/main/image/prompt2.png" onclick="openPreview(this)">
+    <img src="https://raw.githubusercontent.com/AxionLabs-082/my-Labs/main/image/prompt3.png" onclick="openPreview(this)">
+    <img src="https://raw.githubusercontent.com/AxionLabs-082/my-Labs/main/image/prompt4.png" onclick="openPreview(this)">
+  </div>
+
+  <div class="dots">
+    <span class="dot active"></span>
+    <span class="dot"></span>
+    <span class="dot"></span>
+    <span class="dot"></span>
+    <span class="dot"></span> 
+  </div>
+</div>
+  <p class="price">Rp 50.000</p>
+  <button class="buy-btn" onclick="buyLoading(this)">
+  <span class="btn-text">Beli Sekarang</span>
+  <span class="btn-loader"></span>
+</button>
+
+  <div class="payment">
+    <p>Pilih metode pembayaran:</p>
+    <div class="wallet" onclick="selectWallet(this,'Prompt Jailbreak DeepSeek','50000','DANA')">DANA</div>
+    <div class="wallet" onclick="selectWallet(this,'Prompt Jailbreak DeepSeek','50000','GoPay')">GOPAY</div>
+    <div class="wallet" onclick="selectWallet(this,'Prompt Jailbreak DeepSeek','50000','OVO')">OVO</div>
+
+    <div class="number-box">
+      <p class="wallet-text"></p>
+      <p class="wallet-number">081545422006</p>
+      <button class="buy-btn copy-btn" onclick="copyNumber()">Salin Nomor</button>
+      <button class="buy-btn wa-btn disabled" onclick="confirmWA(this)" disabled>
+  konfirmasi pembayaran
+</button>
+    </div>
+  </div>
+</div>
+
+
+
+<footer class="footer">© crafted by ryuuken</footer>
+
+</div>
+
+<script>  
+const walletNumber = "081545422006"; // GANTI NOMOR E-WALLET KAMU  
+const waNumber = "6281545422006";    // FORMAT WA (62)  
+  
+function togglePayment(btn){  
+  const payment = btn.nextElementSibling;  
+  payment.style.display = payment.style.display === "block" ? "none" : "block";  
+}  
+  
+function selectWallet(el, product, price, wallet){
+  const box = el.parentElement.querySelector(".number-box");
+  box.style.display = "block";
+
+  box.dataset.product = product;
+  box.dataset.price = price;
+  box.dataset.wallet = wallet;
+  box.dataset.copied = "false";
+
+  box.querySelector(".wallet-text").innerText =
+  `Silakan transfer melalui ${wallet} ke nomor di bawah ini 👇`;
+
+  const waBtn = box.querySelector(".wa-btn");
+  waBtn.disabled = true;
+  waBtn.classList.add("disabled");
+}
+  function copyNumber(){
+  navigator.clipboard.writeText(walletNumber);
+  alert("Nomor berhasil disalin 📋");
+
+  const box = document.querySelector(".number-box[style*='block']");
+  if (!box) return;
+
+  box.dataset.copied = "true";
+
+  const waBtn = box.querySelector(".wa-btn");
+  waBtn.disabled = false;
+  waBtn.classList.remove("disabled");
+}
+
+  
+function confirmWA(btn){
+  const box = btn.parentElement;
+
+  if (box.dataset.copied !== "true") {
+    alert("Silakan salin nomor & lakukan transfer terlebih dahulu 🙏");
+    return;
+  }
+
+  const product = box.dataset.product;
+  const price = box.dataset.price;
+  const wallet = box.dataset.wallet;
+
+  const message = 
+`Halo 👋
+Saya sudah melakukan pembayaran ya.
+
+📦 Produk: ${product}
+💰 Harga: Rp ${formatRupiah(price)}
+💳 Metode: ${wallet}
+
+Mohon dicek, terima kasih 🙏`;
+
+  const url = `https://wa.me/${waNumber}?text=${encodeURIComponent(message)}`;
+  window.open(url, "_blank");
+}  
+  
+function formatRupiah(angka){  
+  return angka.replace(/\B(?=(\d{3})+(?!\d))/g, ".");  
+}
+
+window.addEventListener("load", () => {
+  setTimeout(() => {
+    document.getElementById("loading").style.display = "none";
+  }, 4000);
+});
+
+function openPreview(imgEl) {
+  document.getElementById("preview-img").src = imgEl.src;
+  document.getElementById("preview").style.display = "flex";
+}
+
+function closePreview() {
+  document.getElementById("preview").style.display = "none";
+}
+
+document.querySelectorAll(".carousel").forEach(carousel => {
+  const track = carousel.querySelector(".carousel-track");
+  const dots = carousel.querySelectorAll(".dot");
+  let index = 0;
+  let startX = 0;
+
+  carousel.addEventListener("touchstart", e => {
+    startX = e.touches[0].clientX;
+  });
+
+  carousel.addEventListener("touchend", e => {
+    let endX = e.changedTouches[0].clientX;
+    if (startX - endX > 50 && index < dots.length - 1) index++;
+    if (endX - startX > 50 && index > 0) index--;
+
+    updateCarousel();
+  });
+
+  function updateCarousel() {
+    track.style.transform = `translateX(-${index * 100}%)`;
+    dots.forEach(d => d.classList.remove("active"));
+    dots[index].classList.add("active");
+  }
+});
+
+function buyLoading(btn){
+  btn.classList.add("loading");
+
+  setTimeout(() => {
+    btn.classList.remove("loading");
+    togglePayment(btn);
+  }, 900); // delay dikit biar "kerasa sistem"
+}
+</script>
+
+</body>
+</html>
